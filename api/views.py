@@ -1,7 +1,7 @@
-from django.shortcuts import render
 from rest_framework import viewsets, permissions
-from .serializers import ServerSerializer, ChannelSerializer
-from .models import Server, Channel
+
+from .models import Server, Channel, Member
+from .serializers import ServerSerializer, ChannelSerializer, MemberSerializer
 
 
 # Create your views here.
@@ -25,5 +25,23 @@ class ChannelViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(server__id=server_id)
         if type_param is not None:
             queryset = queryset.filter(type=type_param)
+
+        return queryset
+
+
+class MemberViewSet(viewsets.ModelViewSet):
+    queryset = Member.objects.all()
+    serializer_class = MemberSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        """Filter based on parameters"""
+        queryset = Member.objects.all()
+        server_id = self.request.query_params.get('server')
+        member_id = self.request.query_params.get('member_id')
+        if server_id is not None:
+            queryset = queryset.filter(server__id=server_id)
+        if member_id is not None:
+            queryset = queryset.filter(member_id=member_id)
 
         return queryset
