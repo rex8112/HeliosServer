@@ -18,7 +18,7 @@ class Channel(models.Model):
 
 
 class Member(models.Model):
-    id = models.BigIntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     server = models.ForeignKey(Server, related_name='members', on_delete=models.CASCADE)
     member_id = models.BigIntegerField()
     settings = models.JSONField(default=dict)
