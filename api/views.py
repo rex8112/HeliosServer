@@ -1,7 +1,8 @@
 from rest_framework import viewsets, permissions
 
-from .models import Server, Channel, Member
-from .serializers import ServerSerializer, ChannelSerializer, MemberSerializer
+from .models import Server, Channel, Member, Stadium, Race, Horse
+from .serializers import ServerSerializer, ChannelSerializer, MemberSerializer, StadiumSerializer, RaceSerializer, \
+    HorseSerializer
 
 
 # Create your views here.
@@ -9,6 +10,42 @@ class ServerViewSet(viewsets.ModelViewSet):
     queryset = Server.objects.all()
     serializer_class = ServerSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+
+class StadiumViewSet(viewsets.ModelViewSet):
+    queryset = Stadium.objects.all()
+    serializer_class = StadiumSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class HorseViewSet(viewsets.ModelViewSet):
+    queryset = Horse.objects.all()
+    serializer_class = HorseSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        """Filter based on server parameter."""
+        queryset = Horse.objects.all()
+        server_id = self.request.query_params.get('server')
+        if server_id is not None:
+            queryset = queryset.filter(server__server__id=server_id)
+
+        return queryset
+
+
+class RaceViewSet(viewsets.ModelViewSet):
+    queryset = Race.objects.all()
+    serializer_class = RaceSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        """Filter based on server parameter."""
+        queryset = Race.objects.all()
+        server_id = self.request.query_params.get('server')
+        if server_id is not None:
+            queryset = queryset.filter(server__server__id=server_id)
+
+        return queryset
 
 
 class ChannelViewSet(viewsets.ModelViewSet):
