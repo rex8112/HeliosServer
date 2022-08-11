@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Server, Channel, Member, Stadium, Race, Horse
+from .models import Server, Channel, Member, Stadium, Race, Horse, Record
 
 
 class ChannelSerializer(serializers.ModelSerializer):
@@ -24,6 +24,12 @@ class HorseSerializer(serializers.ModelSerializer):
 class RaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Race
+        fields = '__all__'
+
+
+class RecordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Record
         fields = '__all__'
 
 

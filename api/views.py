@@ -1,8 +1,9 @@
 from rest_framework import viewsets, permissions
 
-from .models import Server, Channel, Member, Stadium, Race, Horse
-from .serializers import ServerSerializer, ChannelSerializer, MemberSerializer, StadiumSerializer, RaceSerializer, \
-    HorseSerializer
+from .models import Server, Channel, Member, Stadium, Race, Horse, Record
+from .serializers import ServerSerializer, ChannelSerializer, \
+    MemberSerializer, StadiumSerializer, RaceSerializer, HorseSerializer, \
+    RecordSerializer
 
 
 # Create your views here.
@@ -46,6 +47,12 @@ class RaceViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(server__server__id=server_id)
 
         return queryset
+
+
+class RecordViewSet(viewsets.ModelViewSet):
+    queryset = Record.objects.all()
+    serializer_class = RecordSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class ChannelViewSet(viewsets.ModelViewSet):

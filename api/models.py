@@ -49,3 +49,14 @@ class Race(models.Model):
     bets = models.JSONField(default=list)
     settings = models.JSONField(default=dict)
 
+
+class Record(models.Model):
+    id = models.AutoField(primary_key=True)
+    horse = models.ForeignKey(Horse, related_name='records', on_delete=models.CASCADE)
+    race = models.ForeignKey(Race, related_name='records', on_delete=models.CASCADE)
+    type = models.CharField(max_length=100)
+    earnings = models.BigIntegerField(default=0)
+    placing = models.IntegerField()
+    date = models.DateField()
+
+
