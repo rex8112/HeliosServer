@@ -1,3 +1,5 @@
+import datetime
+
 from rest_framework import viewsets, permissions
 
 from .models import Server, Channel, Member, Stadium, Race, Horse, Record
@@ -53,6 +55,21 @@ class RecordViewSet(viewsets.ModelViewSet):
     queryset = Record.objects.all()
     serializer_class = RecordSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        """Filter based on parameters"""
+        queryset = Record.objects.all()
+        horse_id = self.request.query_params.get('horse')
+        allow_basic = self.request.query_params.get('basic')
+        after = self.request.query_params.get('after')
+        if horse_id is not None:
+            queryset = queryset.filter(horse=horse_id)
+        if allow_basic is None:
+            queryset = queryset.exclude(type='basic')
+        if after is not None:
+            after = datetime.datetime.fromisoformat(after).date()
+            queryset = queryset.filter(date__gt=after)
+        return queryset
 
 
 class ChannelViewSet(viewsets.ModelViewSet):
