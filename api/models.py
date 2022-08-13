@@ -21,6 +21,7 @@ class Member(models.Model):
     id = models.AutoField(primary_key=True)
     server = models.ForeignKey(Server, related_name='members', on_delete=models.CASCADE)
     member_id = models.BigIntegerField()
+    templates = models.JSONField(default=list)
     settings = models.JSONField(default=dict)
     flags = models.JSONField(default=list)
 

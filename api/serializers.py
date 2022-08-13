@@ -12,7 +12,7 @@ class ChannelSerializer(serializers.ModelSerializer):
 class MemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = Member
-        fields = ['id', 'server', 'member_id', 'settings', 'flags']
+        fields = ['id', 'server', 'member_id', 'templates', 'settings', 'flags']
 
 
 class HorseSerializer(serializers.ModelSerializer):
