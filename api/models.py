@@ -30,6 +30,7 @@ class Stadium(models.Model):
     server = models.OneToOneField(Server, related_name='stadium', on_delete=models.CASCADE, primary_key=True)
     day = models.IntegerField(default=0)
     settings = models.JSONField(default=dict)
+    events = models.JSONField(default=list)
 
 
 class Horse(models.Model):
