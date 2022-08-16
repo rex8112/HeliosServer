@@ -41,6 +41,7 @@ class Horse(models.Model):
     stats = models.JSONField(default=dict)
     born = models.JSONField(default=tuple)
     settings = models.JSONField(default=dict)
+    flags = models.JSONField(default=list)
 
 
 class Race(models.Model):
