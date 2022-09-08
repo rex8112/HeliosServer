@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from .models import Server, Channel, Member, Stadium, Race, Horse, Record
+from .models import (Server, Channel, Member, Stadium, Race, Horse, Record,
+                     Auction)
 
 
 class ChannelSerializer(serializers.ModelSerializer):
@@ -33,9 +34,16 @@ class RecordSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class AuctionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Auction
+        fields = '__all__'
+
+
 class StadiumSerializer(serializers.ModelSerializer):
     horses = HorseSerializer(many=True, required=False, read_only=True)
     races = RaceSerializer(many=True, required=False, read_only=True)
+    auctions = AuctionSerializer(many=True, required=False, read_only=True)
 
     class Meta:
         model = Stadium

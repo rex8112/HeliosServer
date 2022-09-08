@@ -2,10 +2,11 @@ import datetime
 
 from rest_framework import viewsets, permissions
 
-from .models import Server, Channel, Member, Stadium, Race, Horse, Record
-from .serializers import ServerSerializer, ChannelSerializer, \
-    MemberSerializer, StadiumSerializer, RaceSerializer, HorseSerializer, \
-    RecordSerializer
+from .models import (Server, Channel, Member, Stadium, Race, Horse, Record,
+                     Auction)
+from .serializers import (ServerSerializer, ChannelSerializer,
+                          MemberSerializer, StadiumSerializer, RaceSerializer,
+                          HorseSerializer, RecordSerializer, AuctionSerializer)
 
 
 # Create your views here.
@@ -69,6 +70,21 @@ class RecordViewSet(viewsets.ModelViewSet):
         if after is not None:
             after = datetime.datetime.fromisoformat(after).date()
             queryset = queryset.filter(date__gt=after)
+        return queryset
+
+
+class AuctionViewSet(viewsets.ModelViewSet):
+    queryset = Auction.objects.all()
+    serializer_class = AuctionSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        """Filter based on server parameter."""
+        queryset = Auction.objects.all()
+        server_id = self.request.query_params.get('server')
+        if server_id is not None:
+            queryset = queryset.filter(server__server__id=server_id)
+
         return queryset
 
 
