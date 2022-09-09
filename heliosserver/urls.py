@@ -27,6 +27,7 @@ router.register(r'stadium', viewset=views.StadiumViewSet)
 router.register(r'horses', viewset=views.HorseViewSet)
 router.register(r'races', viewset=views.RaceViewSet)
 router.register(r'records', viewset=views.RecordViewSet)
+router.register(r'auctions', viewset=views.AuctionViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

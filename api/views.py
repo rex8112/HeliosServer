@@ -83,7 +83,7 @@ class AuctionViewSet(viewsets.ModelViewSet):
         queryset = Auction.objects.all()
         server_id = self.request.query_params.get('server')
         if server_id is not None:
-            queryset = queryset.filter(server__server__id=server_id)
+            queryset = queryset.filter(server__id=server_id)
 
         return queryset
 

@@ -65,10 +65,11 @@ class Record(models.Model):
 
 class Auction(models.Model):
     id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=50)
     type = models.CharField(max_length=10)
     server = models.ForeignKey(Server, related_name='auctions',
                                on_delete=models.CASCADE)
-    listings = models.JSONField()
-    settings = models.JSONField()
+    listings = models.JSONField(default=list)
+    settings = models.JSONField(default=dict)
     channel = models.BigIntegerField()
-    message = models.JSONField()
+    message = models.JSONField(default=list)
