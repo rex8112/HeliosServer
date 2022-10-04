@@ -60,6 +60,7 @@ class Record(models.Model):
     type = models.CharField(max_length=100)
     earnings = models.BigIntegerField(default=0)
     placing = models.IntegerField()
+    points = models.IntegerField(default=0)
     date = models.DateField()
 
 
